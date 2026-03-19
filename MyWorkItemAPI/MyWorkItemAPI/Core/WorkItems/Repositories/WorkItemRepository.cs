@@ -1,6 +1,6 @@
-using MyWorkItemAPI.Models;
+using MyWorkItemAPI.Core.WorkItems.Enums;
 
-namespace MyWorkItemAPI.Repositories;
+namespace MyWorkItemAPI.Core.WorkItems.Repositories;
 
 public class WorkItemRepository : IWorkItemRepository
 {
@@ -18,12 +18,20 @@ public class WorkItemRepository : IWorkItemRepository
         });
     }
 
+    ///<inheritdoc/>
     public IEnumerable<WorkItem> GetAll()
-        => _items.OrderByDescending(x => x.CreatedAt);
+    {
+        return _items.OrderByDescending(x => x.CreatedAt);
+    }
+        
 
+    ///<inheritdoc/>
     public WorkItem? GetById(int id)
-        => _items.FirstOrDefault(x => x.Id == id);
+    {
+        return _items.FirstOrDefault(x => x.Id == id);
+    }
 
+    ///<inheritdoc/>
     public WorkItem Create(WorkItem workItem)
     {
         workItem.Id = _nextId++;
@@ -32,6 +40,7 @@ public class WorkItemRepository : IWorkItemRepository
         return workItem;
     }
 
+    ///<inheritdoc/>
     public WorkItem? Update(int id, WorkItem updated)
     {
         var existing = _items.FirstOrDefault(x => x.Id == id);
@@ -45,6 +54,7 @@ public class WorkItemRepository : IWorkItemRepository
         return existing;
     }
 
+    ///<inheritdoc/>
     public bool Delete(int id)
     {
         var item = _items.FirstOrDefault(x => x.Id == id);

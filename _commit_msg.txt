@@ -1,0 +1,10 @@
+refactor(api): restructure project to feature-based modules and improve code quality
+
+- Reorganize folder structure from layered (Controllers/Models/Services/Repositories)
+  to feature-based modules under Core/WorkItems/
+- Separate DTOs and enums into individual files under DTOs/ and Enums/ subfolders
+- Update all namespaces to match new structure (MyWorkItemAPI.Core.WorkItems.*)
+- Replace manual Title validation in controller with [Required] and [MinLength] attributes
+- Add explicit numeric values (starting from 1) to WorkItemStatus and Priority enums
+  to prevent data corruption when adding new enum members in the future
+- Add XML doc comments to WorkItem model and WorkItemsController

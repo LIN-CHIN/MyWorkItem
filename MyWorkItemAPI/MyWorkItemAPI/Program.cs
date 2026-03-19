@@ -1,5 +1,5 @@
-using MyWorkItemAPI.Repositories;
-using MyWorkItemAPI.Services;
+using MyWorkItemAPI.Core.WorkItems.Repositories;
+using MyWorkItemAPI.Core.WorkItems.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

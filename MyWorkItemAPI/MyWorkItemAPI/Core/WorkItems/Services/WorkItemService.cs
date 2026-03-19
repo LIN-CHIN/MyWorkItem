@@ -1,7 +1,7 @@
-using MyWorkItemAPI.Models;
-using MyWorkItemAPI.Repositories;
+using MyWorkItemAPI.Core.WorkItems.DTOs;
+using MyWorkItemAPI.Core.WorkItems.Repositories;
 
-namespace MyWorkItemAPI.Services;
+namespace MyWorkItemAPI.Core.WorkItems.Services;
 
 public class WorkItemService : IWorkItemService
 {
@@ -12,10 +12,19 @@ public class WorkItemService : IWorkItemService
         _repository = repository;
     }
 
-    public IEnumerable<WorkItem> GetAll() => _repository.GetAll();
+    ///<inheritdoc/>
+    public IEnumerable<WorkItem> GetAll()
+    {
+        return _repository.GetAll();
+    }
 
-    public WorkItem? GetById(int id) => _repository.GetById(id);
+    ///<inheritdoc/>
+    public WorkItem? GetById(int id) 
+    {
+        return _repository.GetById(id);
+    }
 
+    ///<inheritdoc/>
     public WorkItem Create(CreateWorkItemDto dto)
     {
         var workItem = new WorkItem
@@ -28,6 +37,7 @@ public class WorkItemService : IWorkItemService
         return _repository.Create(workItem);
     }
 
+    ///<inheritdoc/>
     public WorkItem? Update(int id, UpdateWorkItemDto dto)
     {
         var updated = new WorkItem
@@ -40,5 +50,9 @@ public class WorkItemService : IWorkItemService
         return _repository.Update(id, updated);
     }
 
-    public bool Delete(int id) => _repository.Delete(id);
+    ///<inheritdoc/>
+    public bool Delete(int id) 
+    {
+        return _repository.Delete(id);
+    }
 }
