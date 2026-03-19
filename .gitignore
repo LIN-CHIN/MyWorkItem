@@ -3,6 +3,50 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# =============================
+# Frontend (Node.js / Vite / React)
+# =============================
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+
+# =============================
+# Environment & Secrets
+# =============================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+secrets.json
+appsettings.Production.json
+
+# =============================
+# Cursor IDE
+# =============================
+.cursor/plans/
+.cursorignore
+
+# =============================
+# OS generated files
+# =============================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
 # User-specific files
 *.rsuser
 *.suo
