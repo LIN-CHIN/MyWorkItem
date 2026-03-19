@@ -36,6 +36,11 @@ appsettings.Production.json
 .cursorignore
 
 # =============================
+# Temporary / script files
+# =============================
+_commit_msg.txt
+
+# =============================
 # OS generated files
 # =============================
 .DS_Store
