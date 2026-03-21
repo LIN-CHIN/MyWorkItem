@@ -10,7 +10,7 @@ public class WorkItem
     /// <summary>
     /// 系統流水號 id
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     /// <summary>
     /// 工作項目標題
