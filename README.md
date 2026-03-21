@@ -14,11 +14,11 @@ MyWorkItem/
 
 ## 環境需求
 
-| 工具 | 版本需求 |
-|------|----------|
-| .NET SDK | 8.0 以上 |
-| Node.js | 18.0 以上 |
-| npm | 8.0 以上 |
+| 工具     | 版本需求  |
+| -------- | --------- |
+| .NET SDK | 8.0 以上  |
+| Node.js  | 18.0 以上 |
+| npm      | 8.0 以上  |
 
 ---
 
@@ -36,13 +36,13 @@ dotnet run --project MyWorkItemAPI
 
 ### API 端點
 
-| Method | 路徑 | 說明 |
-|--------|------|------|
-| GET | `/api/workitems` | 取得所有 Work Item |
-| GET | `/api/workitems/{id}` | 取得單一 Work Item |
-| POST | `/api/workitems` | 新增 Work Item |
-| PUT | `/api/workitems/{id}` | 更新 Work Item |
-| DELETE | `/api/workitems/{id}` | 刪除 Work Item |
+| Method | 路徑                  | 說明               |
+| ------ | --------------------- | ------------------ |
+| GET    | `/api/workitems`      | 取得所有 Work Item |
+| GET    | `/api/workitems/{id}` | 取得單一 Work Item |
+| POST   | `/api/workitems`      | 新增 Work Item     |
+| PUT    | `/api/workitems/{id}` | 更新 Work Item     |
+| DELETE | `/api/workitems/{id}` | 刪除 Work Item     |
 
 ---
 
@@ -67,11 +67,11 @@ npm run dev
 
 ### 頁面路由
 
-| 路徑 | 說明 |
-|------|------|
-| `/` | 工作項目清單（含狀態篩選） |
-| `/create` | 新增工作項目 |
-| `/edit/:id` | 編輯工作項目 |
+| 路徑        | 說明                       |
+| ----------- | -------------------------- |
+| `/`         | 工作項目清單（含狀態篩選） |
+| `/create`   | 新增工作項目               |
+| `/edit/:id` | 編輯工作項目               |
 
 ---
 
