@@ -69,7 +69,7 @@ export function EditPage() {
             編輯工作項目
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            #{item.id} · {item.title}
+            {item.number} · {item.title}
           </p>
         </div>
         <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">

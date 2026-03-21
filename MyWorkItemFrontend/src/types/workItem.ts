@@ -12,6 +12,7 @@ export enum Priority {
 
 export interface WorkItem {
   id: number;
+  number: string;
   title: string;
   description?: string;
   status: WorkItemStatus;

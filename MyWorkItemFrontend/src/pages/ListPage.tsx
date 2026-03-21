@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { workItemApi, ApiError } from '../api/workItemApi';
-import { WorkItemStatus } from '../types/workItem';
-import type { WorkItem } from '../types/workItem';
-import { StatusBadge } from '../components/StatusBadge';
-import { PriorityBadge } from '../components/PriorityBadge';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { workItemApi, ApiError } from "../api/workItemApi";
+import { WorkItemStatus } from "../types/workItem";
+import type { WorkItem } from "../types/workItem";
+import { StatusBadge } from "../components/StatusBadge";
+import { PriorityBadge } from "../components/PriorityBadge";
 
-const ALL = 'All';
+const ALL = "All";
 
 export function ListPage() {
   const [items, setItems] = useState<WorkItem[]>([]);
   const [filter, setFilter] = useState<WorkItemStatus | typeof ALL>(ALL);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const fetchItems = async () => {
@@ -20,31 +20,41 @@ export function ListPage() {
       const data = await workItemApi.getAll();
       setItems(data);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : '無法載入資料，請確認後端服務是否啟動');
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : "無法載入資料，請確認後端服務是否啟動",
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => { void fetchItems(); }, []);
+  useEffect(() => {
+    void fetchItems();
+  }, []);
 
   const handleDelete = async (id: number) => {
-    if (!confirm('確定要刪除此工作項目？')) return;
+    if (!confirm("確定要刪除此工作項目？")) return;
     try {
       await workItemApi.delete(id);
       setItems((prev) => prev.filter((i) => i.id !== id));
     } catch (err) {
-      alert(err instanceof ApiError ? err.message : '刪除失敗');
+      alert(err instanceof ApiError ? err.message : "刪除失敗");
     }
   };
 
-  const filtered = filter === ALL ? items : items.filter((i) => i.status === filter);
+  const filtered =
+    filter === ALL ? items : items.filter((i) => i.status === filter);
 
-  const statusFilters: Array<{ value: WorkItemStatus | typeof ALL; label: string }> = [
-    { value: ALL, label: '全部' },
-    { value: WorkItemStatus.Todo, label: '待處理' },
-    { value: WorkItemStatus.InProgress, label: '進行中' },
-    { value: WorkItemStatus.Done, label: '已完成' },
+  const statusFilters: Array<{
+    value: WorkItemStatus | typeof ALL;
+    label: string;
+  }> = [
+    { value: ALL, label: "全部" },
+    { value: WorkItemStatus.Todo, label: "待處理" },
+    { value: WorkItemStatus.InProgress, label: "進行中" },
+    { value: WorkItemStatus.Done, label: "已完成" },
   ];
 
   return (
@@ -56,7 +66,7 @@ export function ListPage() {
             <p className="text-sm text-gray-500 mt-1">管理您的工作項目</p>
           </div>
           <button
-            onClick={() => navigate('/create')}
+            onClick={() => navigate("/create")}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
           >
             + 新增項目
@@ -70,8 +80,8 @@ export function ListPage() {
               onClick={() => setFilter(f.value)}
               className={`px-3 py-1.5 text-sm rounded-lg font-medium transition-colors ${
                 filter === f.value
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
               }`}
             >
               {f.label}
@@ -104,17 +114,25 @@ export function ListPage() {
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-semibold text-gray-900 truncate">{item.title}</h3>
+                  <span className="text-xs font-mono text-gray-400">
+                    {item.number}
+                  </span>
+                  <div className="flex items-center gap-2 flex-wrap mt-0.5">
+                    <h3 className="font-semibold text-gray-900 truncate">
+                      {item.title}
+                    </h3>
                     <StatusBadge status={item.status} />
                     <PriorityBadge priority={item.priority} />
                   </div>
                   {item.description && (
-                    <p className="text-sm text-gray-500 mt-1 line-clamp-2">{item.description}</p>
+                    <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                      {item.description}
+                    </p>
                   )}
                   <p className="text-xs text-gray-400 mt-2">
-                    建立於 {new Date(item.createdAt).toLocaleString('zh-TW')}
-                    {item.updatedAt && ` · 更新於 ${new Date(item.updatedAt).toLocaleString('zh-TW')}`}
+                    建立於 {new Date(item.createdAt).toLocaleString("zh-TW")}
+                    {item.updatedAt &&
+                      ` · 更新於 ${new Date(item.updatedAt).toLocaleString("zh-TW")}`}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">

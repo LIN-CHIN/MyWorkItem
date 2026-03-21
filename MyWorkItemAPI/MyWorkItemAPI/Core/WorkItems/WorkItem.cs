@@ -13,6 +13,11 @@ public class WorkItem
     public long Id { get; set; }
 
     /// <summary>
+    /// 人類可讀的唯一單號，格式為 WI-XXXXXX，系統自動產生
+    /// </summary>
+    public string Number { get; set; } = string.Empty;
+
+    /// <summary>
     /// 工作項目標題
     /// </summary>
     public string Title { get; set; } = string.Empty;
