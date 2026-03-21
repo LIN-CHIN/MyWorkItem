@@ -1,3 +1,4 @@
+using MyWorkItemAPI.Common;
 using MyWorkItemAPI.Core.WorkItems.Repositories;
 using MyWorkItemAPI.Core.WorkItems.Services;
 
@@ -33,6 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ApiExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
 app.UseAuthorization();

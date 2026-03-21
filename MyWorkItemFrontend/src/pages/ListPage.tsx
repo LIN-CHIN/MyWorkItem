@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { workItemApi } from '../api/workItemApi';
+import { workItemApi, ApiError } from '../api/workItemApi';
 import { WorkItemStatus } from '../types/workItem';
 import type { WorkItem } from '../types/workItem';
 import { StatusBadge } from '../components/StatusBadge';
@@ -19,8 +19,8 @@ export function ListPage() {
     try {
       const data = await workItemApi.getAll();
       setItems(data);
-    } catch {
-      setError('無法載入資料，請確認後端服務是否啟動');
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : '無法載入資料，請確認後端服務是否啟動');
     } finally {
       setLoading(false);
     }
@@ -33,8 +33,8 @@ export function ListPage() {
     try {
       await workItemApi.delete(id);
       setItems((prev) => prev.filter((i) => i.id !== id));
-    } catch {
-      alert('刪除失敗');
+    } catch (err) {
+      alert(err instanceof ApiError ? err.message : '刪除失敗');
     }
   };
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MyWorkItemAPI.Common;
 using MyWorkItemAPI.Core.WorkItems.DTOs;
 using MyWorkItemAPI.Core.WorkItems.Services;
 
@@ -26,9 +27,9 @@ public class WorkItemsController : ControllerBase
     /// </summary>
     /// <returns>工作項目清單。</returns>
     [HttpGet]
-    public ActionResult<IEnumerable<WorkItem>> GetAll()
+    public ActionResult<ApiResponse<IEnumerable<WorkItem>>> GetAll()
     {
-        return Ok(_service.GetAll());
+        return Ok(ApiResponse<IEnumerable<WorkItem>>.Success(_service.GetAll()));
     }
 
     /// <summary>
@@ -37,11 +38,13 @@ public class WorkItemsController : ControllerBase
     /// <param name="id">工作項目 ID。</param>
     /// <returns>對應的工作項目；若不存在則回傳 404。</returns>
     [HttpGet("{id}")]
-    public ActionResult<WorkItem> GetById(int id)
+    public ActionResult<ApiResponse<WorkItem>> GetById(int id)
     {
         var item = _service.GetById(id);
-        if (item is null) return NotFound(new { message = $"WorkItem {id} 不存在" });
-        return Ok(item);
+        if (item is null)
+            throw new ApiException(ResponseCode.NotFoundId, $"WorkItem {id} 不存在");
+
+        return Ok(ApiResponse<WorkItem>.Success(item));
     }
 
     /// <summary>
@@ -50,10 +53,10 @@ public class WorkItemsController : ControllerBase
     /// <param name="dto">新增所需的欄位資料。</param>
     /// <returns>建立完成的工作項目，HTTP 201 含 Location header。</returns>
     [HttpPost]
-    public ActionResult<WorkItem> Create([FromBody] CreateWorkItemDto dto)
+    public ActionResult<ApiResponse<WorkItem>> Create([FromBody] CreateWorkItemDto dto)
     {
         var created = _service.Create(dto);
-        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        return Ok(ApiResponse<WorkItem>.Success(created));
     }
 
     /// <summary>
@@ -63,11 +66,13 @@ public class WorkItemsController : ControllerBase
     /// <param name="dto">更新所需的欄位資料。</param>
     /// <returns>更新後的工作項目；若不存在則回傳 404。</returns>
     [HttpPut("{id}")]
-    public ActionResult<WorkItem> Update(int id, [FromBody] UpdateWorkItemDto dto)
+    public ActionResult<ApiResponse<WorkItem>> Update(int id, [FromBody] UpdateWorkItemDto dto)
     {
         var updated = _service.Update(id, dto);
-        if (updated is null) return NotFound(new { message = $"WorkItem {id} 不存在" });
-        return Ok(updated);
+        if (updated is null)
+            throw new ApiException(ResponseCode.NotFoundId, $"WorkItem {id} 不存在");
+
+        return Ok(ApiResponse<WorkItem>.Success(updated));
     }
 
     /// <summary>
@@ -76,10 +81,12 @@ public class WorkItemsController : ControllerBase
     /// <param name="id">要刪除的工作項目 ID。</param>
     /// <returns>成功時回傳 204 No Content；若不存在則回傳 404。</returns>
     [HttpDelete("{id}")]
-    public ActionResult Delete(int id)
+    public ActionResult<ApiResponse<bool>> Delete(int id)
     {
         var success = _service.Delete(id);
-        if (!success) return NotFound(new { message = $"WorkItem {id} 不存在" });
-        return NoContent();
+        if (!success)
+            throw new ApiException(ResponseCode.NotFoundId, $"WorkItem {id} 不存在");
+
+        return Ok(ApiResponse<bool>.Success(true));
     }
 }
