@@ -1,4 +1,5 @@
-import { useState, SubmitEvent } from "react";
+import { useState } from "react";
+import type { SubmitEvent } from "react";
 import { WorkItemStatus, Priority } from "../types/workItem";
 import type { CreateWorkItemDto } from "../types/workItem";
 
