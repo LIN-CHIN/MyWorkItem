@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { WorkItemStatus, Priority } from '../types/workItem';
-import type { CreateWorkItemDto } from '../types/workItem';
+import { useState, SubmitEvent } from "react";
+import { WorkItemStatus, Priority } from "../types/workItem";
+import type { CreateWorkItemDto } from "../types/workItem";
 
 interface Props {
   initialValues?: CreateWorkItemDto;
@@ -9,30 +9,35 @@ interface Props {
   submitLabel?: string;
 }
 
-export function WorkItemForm({ initialValues, onSubmit, onCancel, submitLabel = '儲存' }: Props) {
+export function WorkItemForm({
+  initialValues,
+  onSubmit,
+  onCancel,
+  submitLabel = "儲存",
+}: Props) {
   const [form, setForm] = useState<CreateWorkItemDto>(
     initialValues ?? {
-      title: '',
-      description: '',
+      title: "",
+      description: "",
       status: WorkItemStatus.Todo,
       priority: Priority.Medium,
-    }
+    },
   );
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!form.title.trim()) {
-      setError('標題為必填欄位');
+      setError("標題為必填欄位");
       return;
     }
     setLoading(true);
-    setError('');
+    setError("");
     try {
       await onSubmit(form);
     } catch {
-      setError('操作失敗，請稍後再試');
+      setError("操作失敗，請稍後再試");
     } finally {
       setLoading(false);
     }
@@ -60,9 +65,11 @@ export function WorkItemForm({ initialValues, onSubmit, onCancel, submitLabel = 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">描述</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          描述
+        </label>
         <textarea
-          value={form.description ?? ''}
+          value={form.description ?? ""}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
           rows={3}
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
@@ -72,10 +79,14 @@ export function WorkItemForm({ initialValues, onSubmit, onCancel, submitLabel = 
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">狀態</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            狀態
+          </label>
           <select
             value={form.status}
-            onChange={(e) => setForm({ ...form, status: e.target.value as WorkItemStatus })}
+            onChange={(e) =>
+              setForm({ ...form, status: e.target.value as WorkItemStatus })
+            }
             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value={WorkItemStatus.Todo}>待處理</option>
@@ -85,10 +96,14 @@ export function WorkItemForm({ initialValues, onSubmit, onCancel, submitLabel = 
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">優先度</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            優先度
+          </label>
           <select
             value={form.priority}
-            onChange={(e) => setForm({ ...form, priority: e.target.value as Priority })}
+            onChange={(e) =>
+              setForm({ ...form, priority: e.target.value as Priority })
+            }
             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value={Priority.Low}>低</option>
@@ -111,7 +126,7 @@ export function WorkItemForm({ initialValues, onSubmit, onCancel, submitLabel = 
           disabled={loading}
           className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
         >
-          {loading ? '處理中...' : submitLabel}
+          {loading ? "處理中..." : submitLabel}
         </button>
       </div>
     </form>
