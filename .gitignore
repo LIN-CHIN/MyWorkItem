@@ -4,6 +4,11 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # =============================
+# Project Specs / Design Files
+# =============================
+Spec/
+
+# =============================
 # Frontend (Node.js / Vite / React)
 # =============================
 node_modules/
