@@ -27,7 +27,9 @@ export function EditPage() {
       await workItemApi.update(Number(id), values);
       navigate("/");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "儲存失敗，請稍後再試");
+      throw new Error(
+        err instanceof ApiError ? err.message : "儲存失敗，請稍後再試",
+      );
     }
   };
 

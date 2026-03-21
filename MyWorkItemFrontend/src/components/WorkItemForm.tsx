@@ -37,8 +37,8 @@ export function WorkItemForm({
     setError("");
     try {
       await onSubmit(form);
-    } catch {
-      setError("操作失敗，請稍後再試");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "操作失敗，請稍後再試");
     } finally {
       setLoading(false);
     }
